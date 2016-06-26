@@ -12,7 +12,7 @@ CREATE TABLE Student (
 		CHECK (gender = 'F' OR gender = 'M'),
 	country_of_birth varchar(20) NOT NULL,
 	date_enrolled date
-		CHECK (date_enrolled >19000101 AND date_enrolled<20160623)
+		CHECK (date_enrolled > 19000101 AND date_enrolled < 20160623)
 );
 
 CREATE TABLE Job (
@@ -49,6 +49,7 @@ CREATE TABLE Student_skill (
 	PRIMARY KEY(title, student_name)
 );
 
+/*add multiple-attribute constraint: start_date < end_date*/
 CREATE TABLE Edition (
 	edition_id int PRIMARY KEY,
 	course_code int
@@ -79,12 +80,21 @@ CREATE TABLE Instructor (
 	    CONSTRAINT valid_yr_employed CHECK (yr_employed >= 1900),
 	teaching_or_research  varchar(1)
 		CHECK (teaching_or_research = 'T' OR teaching_or_research = 'R'),
-	research_interests varchar(20)
-	    CHECK ((faculty_or_freelancer = 'FA' AND yr_employed IS NOT NULL AND teaching_or_research = 'T' AND research_interests IS NULL) OR 
+	research_interests varchar(50)
+	/*    CHECK ((faculty_or_freelancer = 'FA' AND yr_employed IS NOT NULL AND teaching_or_research = 'T' AND research_interests IS NULL) OR 
 	    	(faculty_or_freelancer = 'FA' AND year_employed IS NOT NULL AND teaching_or_research = 'R' AND research_interests IS NOT NULL) OR 
-	    	(faculty_or_freelancer = 'FR' AND year_employed IS NULL AND teaching_or_research IS NULL AND research_interests IS NULL)),
+	    	(faculty_or_freelancer = 'FR' AND year_employed IS NULL AND teaching_or_research IS NULL AND research_interests IS NULL)),*/
 	PRIMARY KEY(name, age)
 );
+
+CREATE TABLE Faculty (
+    yr_employed int,
+    teaching_or_research varchar(1)
+) INHERITS (Instructor);
+
+CREATE TABLE Research (
+    research_interests varchar(50)
+) INHERITS (Faculty);
 
 CREATE TABLE Edition_to_Instructor (
 	edition_id int,
