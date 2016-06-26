@@ -39,15 +39,18 @@ CREATE TABLE Company_expertise (
 );
 
 CREATE TABLE Student_skill (
-	job_title varchar(20),
+	company_name varchar(20),
 	student_name varchar(20),
 	skill varchar(20),
 	FOREIGN KEY(student_name) REFERENCES Student(user_name)
 	    ON DELETE CASCADE
 	    ON UPDATE CASCADE,
+	FOREIGN KEY(company_name) REFERENCES Job(company_name)
+	    ON DELETE CASCADE
+	    ON UPDATE CASCADE,
 	level_of_expertise int
 	    CONSTRAINT check_level CHECK(level_of_expertise BETWEEN 2 AND 5),
-	PRIMARY KEY(job_title, student_name)
+	PRIMARY KEY(company_name, student_name)
 );
 
 /*add multiple-attribute constraint: start_date < end_date*/
