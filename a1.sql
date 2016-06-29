@@ -88,7 +88,7 @@ CREATE TABLE Company (
 CREATE TABLE Student_skill (
 	company_name varchar(20),
 	student_name varchar(20),
-	skill varchar(20),
+	skill varchar(20) NOT NULL,
 	FOREIGN KEY(student_name) REFERENCES Student(username)
 	    ON DELETE CASCADE
 	    ON UPDATE CASCADE,
@@ -97,7 +97,7 @@ CREATE TABLE Student_skill (
 	    ON UPDATE CASCADE,
 	level_of_expertise int
 	    CONSTRAINT check_level CHECK(level_of_expertise BETWEEN 2 AND 5),
-	PRIMARY KEY(company_name, student_name)
+	PRIMARY KEY(company_name, student_name, skill)
 );
 
 CREATE TABLE Edition (
@@ -159,14 +159,14 @@ CREATE TABLE Experience (
 	student_name varchar(20),
 	edition_id int,
 	grade int NOT NULL
-	    CONSTRAINT positive_grade CHECK (grade > 0),
+	    CONSTRAINT positive_grade CHECK (grade > 0 and grade <= 100),
 	satisfaction ranking,
 	instructor_ranking ranking,
 	skills varchar(20),
 	interest_overall ranking,
-	FOREIGN KEY(student_name) REFERENCES Student(user_name)
+	FOREIGN KEY(student_name) REFERENCES Student(username)
 	    ON UPDATE CASCADE,
-    FOREIGN KEY(edition_id) REFERENCES Edition(edition_id)
+        FOREIGN KEY(edition_id) REFERENCES Edition(edition_id)
         ON UPDATE CASCADE,
 	PRIMARY KEY (student_name, edition_id)
 );
@@ -182,8 +182,16 @@ CREATE TABLE Course_skill (
 );
 
 CREATE TABLE Interest_in_course (
+	student_name varchar(20),
+	edition_id int,
 	interest_before ranking,
-	interest_after ranking
+	interest_after ranking,
+	interest_overall ranking,
+	FOREIGN KEY(student_name) REFERENCES Student(username)
+	    ON UPDATE CASCADE,
+    FOREIGN KEY(edition_id) REFERENCES Edition(edition_id)
+        ON UPDATE CASCADE,
+    PRIMARY KEY(student_name, edition_id, interest_overall)
 );
 
 
