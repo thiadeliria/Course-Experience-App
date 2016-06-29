@@ -5,14 +5,15 @@ CREATE DOMAIN ranking AS int
         VALUE BETWEEN 1 AND 5);
 
 CREATE TABLE Student (
-	user_name  varchar(20) PRIMARY KEY,
+	username  varchar(20) PRIMARY KEY,
 	date_of_birth date
 		CHECK (date_of_birth > 19000101 AND date_of_birth < 20160623),
 	gender varchar(1)
 		CHECK (gender = 'F' OR gender = 'M'),
 	country_of_birth varchar(20) NOT NULL,
 	date_enrolled date
-		CHECK (date_enrolled > 19000101 AND date_enrolled < 20160623)
+		CHECK (date_enrolled > 19000101 AND date_enrolled < 20160623),
+	CHECK (date_of_birth < date_enrolled)
 );
 
 CREATE TABLE Job (
@@ -24,7 +25,7 @@ CREATE TABLE Job (
 	end_date date
 		CHECK (end_date > 19000101 AND end_date < 20200101),
 	PRIMARY KEY (title, company_name),
-	FOREIGN KEY(student_name) REFERENCES Student(user_name)
+	FOREIGN KEY(student_name) REFERENCES Student(username)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
@@ -42,7 +43,7 @@ CREATE TABLE Student_skill (
 	company_name varchar(20),
 	student_name varchar(20),
 	skill varchar(20),
-	FOREIGN KEY(student_name) REFERENCES Student(user_name)
+	FOREIGN KEY(student_name) REFERENCES Student(username)
 	    ON DELETE CASCADE
 	    ON UPDATE CASCADE,
 	FOREIGN KEY(company_name) REFERENCES Job(company_name)
@@ -53,7 +54,6 @@ CREATE TABLE Student_skill (
 	PRIMARY KEY(company_name, student_name)
 );
 
-/*add multiple-attribute constraint: start_date < end_date*/
 CREATE TABLE Edition (
 	edition_id int PRIMARY KEY,
 	course_code int
