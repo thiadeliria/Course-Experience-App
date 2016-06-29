@@ -14,8 +14,9 @@ CREATE TABLE Courses (
 
 CREATE TABLE Topics (
 	course_no int
-		CHECK (course_code BETWEEN 100 AND 9999),
-	dept_code varchar(3) like '',
+	    CHECK (course_code BETWEEN 100 AND 9999),
+	dept_code varchar(3)
+	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	title varchar(20) NOT NULL,
 	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code),
 	PRIMARY KEY (course_no, dept_code, title)
@@ -24,7 +25,8 @@ CREATE TABLE Topics (
 CREATE TABLE Skills (
 	course_no int
 		CHECK (course_code BETWEEN 100 AND 9999),
-	dept_code varchar(3) like '',
+	dept_code varchar(3)
+	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	title varchar(20) NOT NULL,
 	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code),
 	PRIMARY KEY (course_no, dept_code, title)
@@ -33,14 +35,16 @@ CREATE TABLE Skills (
 CREATE TABLE Prerequisite (
 	course_no int
 		CHECK (course_code BETWEEN 100 AND 9999),
-	dept_code varchar(3) like '',
+	dept_code varchar(3)
+	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	course_id varchar(7)
 );
 
 CREATE TABLE Exclusion (
 	course_no int
 		CHECK (course_code BETWEEN 100 AND 9999),
-	dept_code varchar(3) like '',
+	dept_code varchar(3)
+	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	course_id varchar(7)
 );
 
