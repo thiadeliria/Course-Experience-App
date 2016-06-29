@@ -5,7 +5,7 @@ CREATE TYPE time_of_day AS ENUM ('morning', 'day', 'evening');
 CREATE DOMAIN ranking AS int
     CONSTRAINT valid_ranking CHECK(
         VALUE BETWEEN 1 AND 5);
-    
+
 CREATE TABLE Course (
 	course_no int
 		CHECK (course_code BETWEEN 100 AND 9999),
@@ -150,7 +150,7 @@ CREATE TABLE Research (
 ) INHERITS (Faculty);
 
 CREATE TABLE Edition_to_Instructor (
-	edition_id int,	interest_overall ranking,
+	edition_id int,
 	instructor_name varchar(20),
 	age int,
 	FOREIGN KEY(edition_id) REFERENCE Edition(edition_id),
