@@ -6,9 +6,9 @@ CREATE DOMAIN ranking AS int
 CREATE TABLE Courses (
 	course_no int
 		CHECK (course_code BETWEEN 100 AND 9999),
-	dept_name varchar(20) NOT NULL,
+	dept_name varchar(40) NOT NULL,
 	dept_code varchar(3) like ''
-	general_area varchar(20) NOT NULL,
+	general_area varchar(30) NOT NULL,
 	PRIMARY KEY (course_no, dept_code)
 );
 
@@ -17,7 +17,7 @@ CREATE TABLE Topics (
 	    CHECK (course_code BETWEEN 100 AND 9999),
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
-	title varchar(20) NOT NULL,
+	title varchar(30) NOT NULL,
 	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code),
 	PRIMARY KEY (course_no, dept_code, title)
 );
@@ -27,7 +27,7 @@ CREATE TABLE Skills (
 		CHECK (course_code BETWEEN 100 AND 9999),
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
-	title varchar(20) NOT NULL,
+	title varchar(30) NOT NULL,
 	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code),
 	PRIMARY KEY (course_no, dept_code, title)
 );
