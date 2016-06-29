@@ -27,10 +27,11 @@ CREATE TABLE Job (
 	PRIMARY KEY (title, company_name),
 	FOREIGN KEY(student_name) REFERENCES Student(username)
 		ON DELETE CASCADE
-		ON UPDATE CASCADE
+		ON UPDATE CASCADE,
+	CHECK (start_date < end_date)
 );
 
-CREATE TABLE Company_expertise (
+CREATE TABLE Company (
 	company_name varchar(20),
 	expertise_name varchar(20),
 	PRIMARY KEY(company_name, expertise_name),
@@ -80,9 +81,7 @@ CREATE TABLE Instructor (
 	    CONSTRAINT valid_gender CHECK (gender = 'F' OR gender = 'M'),
 	areas_of_expertise varchar(30),
 	faculty_or_freelancer varchar(2)
-		CHECK (faculty_or_freelancer = 'FA' OR faculty_or_freelancer = 'FR'),
-	yr_employed int
-	    CONSTRAINT valid_yr_employed CHECK (yr_employed >= 1900),
+	    CHECK (faculty_or_freelancer = 'FA' OR faculty_or_freelancer = 'FR'),
 	teaching_or_research  varchar(1)
 		CHECK (teaching_or_research = 'T' OR teaching_or_research = 'R'),
 	research_interests varchar(50)
@@ -93,7 +92,8 @@ CREATE TABLE Instructor (
 );
 
 CREATE TABLE Faculty (
-    yr_employed int,
+    yr_employed int
+        CONSTRAINT valid_yr_employed CHECK (yr_employed > 1900),
     teaching_or_research varchar(1)
 ) INHERITS (Instructor);
 
