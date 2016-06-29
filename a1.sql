@@ -68,7 +68,8 @@ CREATE TABLE Edition (
 	number_of_students int
 	    CONSTRAINT positive_enrollment CHECK (number_of_students >= 0),
 	FOREIGN KEY(course_code, dept_code) REFERENCES Courses(course_code, dept_code)
-	    ON UPDATE CASCADE
+	    ON UPDATE CASCADE,
+	CHECK (start_date < end_date)
 );
 
 CREATE TABLE Instructor (
