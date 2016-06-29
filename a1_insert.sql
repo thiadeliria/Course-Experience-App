@@ -1,3 +1,42 @@
+INSERT INTO Courses (course_no, dept_name, dept_code, general_area) VALUES
+  (302, 'Electrical & Computer Engineering', 'ECE', 'probability'),
+  (361, 'Electrical & Computer Engineering', 'ECE', 'network'),
+  (410, 'Rotman Commerce', 'JRE', 'Management'),
+  (345, 'Electrical & Computer Engineering', 'ECE', 'algorithm'),
+  (311, 'Electrical & Computer Engineering', 'ECE', 'digital circuit')
+  
+INSERT INTO Topics (course_no, dept_code, title) VALUES
+  (302, 'ECE', 'probability'),
+  (361, 'ECE', 'intro to network'),
+  (410, 'JRE', 'industrial strategy'),
+  (345, 'ECE', 'intro to algorithm'),
+  (311, 'ECE', 'digital circuit')
+  
+INSERT INTO Skills (course_no, dept_code, title) VALUES
+  (302, 'ECE', 'probability calculation'),
+  (361, 'ECE', 'network'),
+  (410, 'JRE', 'industrial strategy'),
+  (345, 'ECE', 'algorithm'),
+  (311, 'ECE', 'digital system')
+
+INSERT INTO Prerequisite (course_no, dept_code, course_id) VALUES
+  (302, 'ECE', 'MAT290'),
+  (302, 'ECE', 'MAT291'),
+  (302, 'ECE', 'ECE216'),
+  (361, 'ECE', 'ECE302'),
+  (361, 'ECE', 'STA286'),
+  (345, 'ECE', 'ECE244'),
+  (311, 'ECE', 'MAT290'),
+  (311, 'ECE', 'MAT291'),
+  (311, 'ECE', 'ECE216')
+
+INSERT INTO Exclusion (course_no, dept_code, course_id) VALUES
+  (302, 'ECE', 'STA286'),
+  (361, 'ECE', 'network'),
+  (410, 'JRE', 'industrial strategy'),
+  (345, 'ECE', 'algorithm'),
+  (311, 'ECE', 'digital system')
+  
 INSERT INTO Edition (edition_id, start_date, end_date, course_time, number_of_students, course_code, dept_code) VALUES
   (1, 20160104, 20160414, 'day', 100, 302, 'ECE'),
   (2, 20160104, 20160418, 'day', 80, 361, 'ECE'),
@@ -32,11 +71,11 @@ INSERT INTO Student_skill(company_name, student_name, skill, level_of_expertise 
   ('The Walt Disney Company', 'zhangf38', 'operation skills', 4)
 
 INSERT INTO Experience(student_name, edition_id, grade, satisfaction, instructor_ranking, skills, interest_overall) VALUES
-  ('zhangf38', 1, 70, 5,4, 'probability calculation', 5),
-  ('zhangf38', 2, 82, 5,5, 'network', 5),
-  ('zhangf38', 3, 65, 3,3, 'industrial strategy', 2),
-  ('zhangf38', 4, 86, 5,5, 'algorithm', 5),
-  ('zhangf38', 5, 85, 4,4, 'digital system', 4)
+  ('zhangf38', 1, 70, 5,4, 'probability calculation'),
+  ('zhangf38', 2, 82, 5,5, 'network'),
+  ('zhangf38', 3, 65, 3,3, 'industrial strategy'),
+  ('zhangf38', 4, 86, 5,5, 'algorithm'),
+  ('zhangf38', 5, 85, 4,4, 'digital system')
  
 INSERT INTO Course_skill(skill_name, edition_id, level_before, level_after) VALUES
   ('probability calculation',1, 3, 5),
@@ -45,4 +84,9 @@ INSERT INTO Course_skill(skill_name, edition_id, level_before, level_after) VALU
   ('algorithm', 4, 2, 5),
   ('digital system',5, 2, 4)
   
-
+INSERT INTO Interest_in_course (student_name, edition_id, interest_before, interest_after, interest_overall) VALUES
+  ('zhangf38', 1, 5, 4, 5),
+  ('zhangf38', 2, 3, 5, 5),
+  ('zhangf38', 3, 2, 2, 2),
+  ('zhangf38', 4, 5, 5, 5),
+  ('zhangf38', 5, 3, 4, 4)
