@@ -147,7 +147,7 @@ CREATE TABLE Research (
 ) INHERITS (Faculty);
 
 CREATE TABLE Edition_to_Instructor (
-	edition_id int,
+	edition_id int,	interest_overall ranking,
 	instructor_name varchar(20),
 	age int,
 	FOREIGN KEY(edition_id) REFERENCE Edition(edition_id),
@@ -163,7 +163,6 @@ CREATE TABLE Experience (
 	satisfaction ranking,
 	instructor_ranking ranking,
 	skills varchar(20),
-	interest_overall ranking,
 	FOREIGN KEY(student_name) REFERENCES Student(username)
 	    ON UPDATE CASCADE,
         FOREIGN KEY(edition_id) REFERENCES Edition(edition_id)
