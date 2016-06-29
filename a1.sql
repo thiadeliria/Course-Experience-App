@@ -3,7 +3,7 @@ CREATE TYPE time_of_day AS ENUM ('morning', 'day', 'evening');
 CREATE DOMAIN ranking AS int
     CONSTRAINT valid_ranking CHECK(
         VALUE BETWEEN 1 AND 5);
-CREATE TABLE Courses (
+CREATE TABLE Course (
 	course_no int
 		CHECK (course_code BETWEEN 100 AND 9999),
 	dept_name varchar(40) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE Courses (
 	PRIMARY KEY (course_no, dept_code)
 );
 
-CREATE TABLE Topics (
+CREATE TABLE Topic (
 	course_no int
 	    CHECK (course_code BETWEEN 100 AND 9999),
 	dept_code varchar(3)
@@ -22,7 +22,7 @@ CREATE TABLE Topics (
 	PRIMARY KEY (course_no, dept_code, title)
 );
 
-CREATE TABLE Skills (
+CREATE TABLE Skill (
 	course_no int
 		CHECK (course_code BETWEEN 100 AND 9999),
 	dept_code varchar(3)
