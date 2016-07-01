@@ -130,6 +130,15 @@ CREATE TABLE Edition (
 	CHECK (start_date < end_date)
 );
 
+CREATE TABLE Edition_to_Instructor (
+	edition_id int,
+	student_name varchar(20),
+	FOREIGN KEY(edition_id) REFERENCE Edition(edition_id),
+	FOREIGN KEY(student_name) REFERENCE Student (username),
+	PRIMARY KEY(edition_id, student_name)
+);
+
+
 CREATE TABLE Instructor (
 	name varchar(30),
 	age int
