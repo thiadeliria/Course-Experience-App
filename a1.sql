@@ -10,7 +10,8 @@ CREATE TABLE Course (
 	course_no int
 		CHECK (course_no BETWEEN 100 AND 9999),
 	dept_name varchar(40) NOT NULL,
-	dept_code varchar(3) like ''
+	dept_code varchar(3)
+	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	general_area varchar(30) NOT NULL,
 	PRIMARY KEY (course_no, dept_code)
 );
