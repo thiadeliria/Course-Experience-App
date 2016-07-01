@@ -41,7 +41,11 @@ CREATE TABLE Prerequisite (
 		CHECK (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
-	course_id varchar(7)
+	course_id varchar(7),
+	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	PRIMARY KEY (course_no, dept_code, course_id)
 );
 
 CREATE TABLE Exclusion (
@@ -50,6 +54,10 @@ CREATE TABLE Exclusion (
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	course_id varchar(7)
+	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	PRIMARY KEY (course_no, dept_code, course_id)
 );
 
 
