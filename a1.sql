@@ -89,19 +89,19 @@ CREATE TABLE Company (
 		ON UPDATE CASCADE
 );
 
-CREATE TABLE Student_skill (
+CREATE TABLE Job_skill (
 	company_name varchar(20),
-	student_name varchar(20),
+	title varchar(20),
 	skill varchar(20) NOT NULL,
-	FOREIGN KEY(student_name) REFERENCES Student(username)
+	FOREIGN KEY(company_name) REFERENCES Job(company_name)
 	    ON DELETE CASCADE
 	    ON UPDATE CASCADE,
-	FOREIGN KEY(company_name) REFERENCES Job(company_name)
+	FOREIGN KEY(title) REFERENCES Job(title)
 	    ON DELETE CASCADE
 	    ON UPDATE CASCADE,
 	level_of_expertise int
 	    CONSTRAINT check_level CHECK(level_of_expertise BETWEEN 2 AND 5),
-	PRIMARY KEY(company_name, student_name, skill)
+	PRIMARY KEY(company_name, title, skill)
 );
 
 CREATE TABLE Edition (
