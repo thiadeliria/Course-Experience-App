@@ -8,7 +8,7 @@ CREATE DOMAIN ranking AS int
 
 CREATE TABLE Course (
 	course_no int
-		CHECK (course_code BETWEEN 100 AND 9999),
+		CHECK (course_no BETWEEN 100 AND 9999),
 	dept_name varchar(40) NOT NULL,
 	dept_code varchar(3) like ''
 	general_area varchar(30) NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE Course (
 
 CREATE TABLE Topic (
 	course_no int
-	    CHECK (course_code BETWEEN 100 AND 9999),
+	    CHECK (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	title varchar(30) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE Topic (
 
 CREATE TABLE Skill (
 	course_no int
-		CHECK (course_code BETWEEN 100 AND 9999),
+		CHECK (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	title varchar(30) NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE Skill (
 
 CREATE TABLE Prerequisite (
 	course_no int
-		CHECK (course_code BETWEEN 100 AND 9999),
+		CHECK (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	course_id varchar(7)
@@ -45,7 +45,7 @@ CREATE TABLE Prerequisite (
 
 CREATE TABLE Exclusion (
 	course_no int
-		CHECK (course_code BETWEEN 100 AND 9999),
+		CHECK (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	course_id varchar(7)
