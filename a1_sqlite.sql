@@ -137,23 +137,23 @@ create table Experience (
 	student_name varchar, 
 	edition_id int, 
 	grade int NOT NULL, 
-	satisfaction int, 
-	instructor_ranking int, 
+	satisfaction int CHECK(satisfaction BETWEEN 1 AND 5), , 
+	instructor_ranking int CHECK(instructor_ranking BETWEEN 1 AND 5), , 
 	skills varchar
 );
 
 create table Course_skill (
 	skill_name varchar, 
 	edition_id int, 
-	level_before int, 
-	level_after int
+	level_before int CHECK(level_before BETWEEN 1 AND 5), , 
+	level_after int CHECK(level_after BETWEEN 1 AND 5), 
 );
 
 create table Interest_in_course (
 	student_name varchar, 
 	edition_id int, 
-	interest_before int, 
-	interest_after int, 
-	interest_overall int
+	interest_before int CHECK(interest_before BETWEEN 1 AND 5), 
+	interest_after int CHECK(interest_after BETWEEN 1 AND 5), 
+	interest_overall int CHECK(interest_overall BETWEEN 1 AND 5), 
 );
 
