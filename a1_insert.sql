@@ -67,8 +67,8 @@ INSERT INTO Job(student_name, title, company_name, start_date, end_date) VALUES
 INSERT INTO Company_expertise(company_name, expertise_name) VALUES
   ('The Walt Disney Company', 'Animation')
 
-INSERT INTO Student_skill(company_name, student_name, skill, level_of_expertise ) VALUES
-  ('The Walt Disney Company', 'zhangf38', 'operation skills', 4)
+INSERT INTO Student_skill(company_name, title, skill, level_of_expertise ) VALUES
+  ('The Walt Disney Company', 'Manager Assistant', 'operation skills', 4)
 
 INSERT INTO Experience(student_name, edition_id, grade, satisfaction, instructor_ranking, skills, interest_overall) VALUES
   ('zhangf38', 1, 70, 5,4, 'probability calculation'),
