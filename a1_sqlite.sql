@@ -42,26 +42,40 @@ create table Interest_in_course(student_name varchar, edition_id int, interest_b
 create table Course (
 	course_no int CHECK(course_code BETWEEN 100 AND 9999), 
 	dept_name varchar(40) NOT NULL, 
-	dept_code varchar(3), 
-	general_area varchar(30) NOT NULL
+	dept_code varchar(3),
+	general_area varchar(30) NOT NULL,
+	PRIMARY KEY (course_no, dept_code)
 	);
 
 create table Topic (
 	course_no int CHECK (course_no BETWEEN 100 AND 9999), 
-	dept_code varchar(3), 
+	dept_code varchar(3) CHECK (dept_code ~ '[[:alpha:]]'), 
 	title varchar(30) NOT NULL
+	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code),
+	PRIMARY KEY (course_no, dept_code, title)
+
 );
 
-create table Skill (
-	course_no int, 
-	dept_code varchar(3), 
-	title varchar(30) NOT NULL
+CREATE TABLE Skill (
+	course_no int
+		CHECK (course_no BETWEEN 100 AND 9999),
+	dept_code varchar(3)
+	    CHECK (dept_code ~ '[[:alpha:]]'),
+	title varchar(30) NOT NULL,
+	FOREIGN KEY (course_no, dept_code) REFERENCES Courses(course_no, dept_code),
+	PRIMARY KEY (course_no, dept_code, title)
 );
 
-create table Prerequisite (
-	course_no int, 
-	dept_code varchar(3), 
-	course_id varchar(7)
+CREATE TABLE Prerequisite (
+	course_no int
+		CHECK (course_no BETWEEN 100 AND 9999),
+	dept_code varchar(3)
+	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
+	course_id varchar(7),
+	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	PRIMARY KEY (course_no, dept_code, course_id)
 );
 
 create table Exclusion (
@@ -104,7 +118,8 @@ create table Edition (
 	dept_code varchar(3), 
 	start_date text, 
 	end_date text, 
-	course_time text NOT NULL, 
+	course_time text CHECK(course_time='morning' or
+		course_time='day' or course_time='evening'), 
 	number_of_students int
 );
 

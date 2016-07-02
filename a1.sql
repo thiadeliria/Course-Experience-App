@@ -32,7 +32,7 @@ CREATE TABLE Skill (
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	title varchar(30) NOT NULL,
-	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code),
+	FOREIGN KEY (course_no, dept_code) REFERENCES Courses(course_no, dept_code),
 	PRIMARY KEY (course_no, dept_code, title)
 );
 
