@@ -18,7 +18,7 @@ drop table if exists Course_skill;
 drop table if exists Interest_in_course;
 
 create table Course (
-	course_no int CHECK(course_code BETWEEN 100 AND 9999), 
+	course_no int CHECK(course_no BETWEEN 100 AND 9999), 
 	dept_name varchar(40) NOT NULL, 
 	dept_code varchar(3) CONSTRAINT alphabet_only CHECK (dept_code LIKE '[[:alpha:]]'),
 	general_area varchar(30) NOT NULL,
@@ -61,7 +61,7 @@ create table Exclusion (
 		CHECK (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code LIKE '[[:alpha:]]'),
-	course_id varchar(7)
+	course_id varchar(7),
 	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
