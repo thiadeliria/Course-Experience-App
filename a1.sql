@@ -101,14 +101,14 @@ CREATE TABLE Job_skill (
 	company_name varchar(20),
 	title varchar(20),
 	skill varchar(20) NOT NULL,
+	level_of_expertise int
+	    CONSTRAINT check_level CHECK(level_of_expertise BETWEEN 2 AND 5),
 	FOREIGN KEY(company_name) REFERENCES Job(company_name)
 	    ON DELETE CASCADE
 	    ON UPDATE CASCADE,
 	FOREIGN KEY(title) REFERENCES Job(title)
 	    ON DELETE CASCADE
 	    ON UPDATE CASCADE,
-	level_of_expertise int
-	    CONSTRAINT check_level CHECK(level_of_expertise BETWEEN 2 AND 5),
 	PRIMARY KEY(company_name, title, skill)
 );
 
@@ -130,14 +130,13 @@ CREATE TABLE Edition (
 	CHECK (start_date < end_date)
 );
 
-CREATE TABLE Edition_to_Instructor (
+CREATE TABLE Edition_to_Student (
 	edition_id int,
 	student_name varchar(20),
 	FOREIGN KEY(edition_id) REFERENCE Edition(edition_id),
 	FOREIGN KEY(student_name) REFERENCE Student (username),
 	PRIMARY KEY(edition_id, student_name)
 );
-
 
 CREATE TABLE Instructor (
 	name varchar(30),
@@ -150,7 +149,7 @@ CREATE TABLE Instructor (
 	    CHECK (faculty_or_freelancer = 'FA' OR faculty_or_freelancer = 'FR'),
 	teaching_or_research  varchar(1)
 		CHECK (teaching_or_research = 'T' OR teaching_or_research = 'R'),
-	research_interests varchar(50)
+	research_interests varchar(50),
 	/*    CHECK ((faculty_or_freelancer = 'FA' AND yr_employed IS NOT NULL AND teaching_or_research = 'T' AND research_interests IS NULL) OR 
 	    	(faculty_or_freelancer = 'FA' AND year_employed IS NOT NULL AND teaching_or_research = 'R' AND research_interests IS NOT NULL) OR 
 	    	(faculty_or_freelancer = 'FR' AND year_employed IS NULL AND teaching_or_research IS NULL AND research_interests IS NULL)),*/
@@ -213,14 +212,4 @@ CREATE TABLE Interest_in_course (
         ON UPDATE CASCADE,
     PRIMARY KEY(student_name, edition_id, interest_overall)
 );
-
-
-
-
-
-
-
-
-
-
 
