@@ -102,7 +102,7 @@ create table Company (
 		ON UPDATE CASCADE
 );
 
-create table Student_skill (
+create table Job_skill (
 	company_name varchar(20), 
 	student_name varchar(20),
 	skill varchar(20) NOT NULL, 
