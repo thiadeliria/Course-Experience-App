@@ -1,4 +1,26 @@
-/*DROP TABLE*/
+DROP SCHEMA IF EXISTS cea CASCADE;
+CREATE SCHEMA cea;
+SET SEARCH_PATH TO cea;
+
+/* Delete the tables if they already exist */
+drop table if exists Course;
+drop table if exists Topic;
+drop table if exists Skill;
+drop table if exists Prerequisite;
+drop table if exists Exclusion;
+drop table if exists Student;
+drop table if exists Job;
+drop table if exists Company;
+drop table if exists Job_skill;
+drop table if exists Edition;
+drop table if exists Instructor;
+drop table if exists Faculty;
+drop table if exists Research;
+drop table if exists Edition_to_Instructor;
+drop table if exists Edition_to_Student;
+drop table if exists Experience;
+drop table if exists Course_skill;
+drop table if exists Interest_in_course;
 
 CREATE TYPE time_of_day AS ENUM ('morning', 'day', 'evening');
 
