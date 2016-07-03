@@ -30,7 +30,7 @@ CREATE DOMAIN ranking AS int
 
 CREATE TABLE Course (
 	course_no int
-		CHECK (course_no BETWEEN 100 AND 9999),
+		CHECK valid_course_no (course_no BETWEEN 100 AND 9999),
 	dept_name varchar(40) NOT NULL,
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
@@ -40,7 +40,7 @@ CREATE TABLE Course (
 
 CREATE TABLE Topic (
 	course_no int
-	    CHECK (course_no BETWEEN 100 AND 9999),
+		CHECK valid_course_no (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	title varchar(30) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE Topic (
 
 CREATE TABLE Skill (
 	course_no int
-		CHECK (course_no BETWEEN 100 AND 9999),
+		CHECK valid_course_no (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	title varchar(30) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE Skill (
 
 CREATE TABLE Prerequisite (
 	course_no int
-		CHECK (course_no BETWEEN 100 AND 9999),
+		CHECK valid_course_no (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	course_id varchar(7),
@@ -72,7 +72,7 @@ CREATE TABLE Prerequisite (
 
 CREATE TABLE Exclusion (
 	course_no int
-		CHECK (course_no BETWEEN 100 AND 9999),
+		CHECK valid_course_no (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
 	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	course_id varchar(7)
@@ -172,16 +172,13 @@ CREATE TABLE Instructor (
 	teaching_or_research  varchar(1)
 		CHECK (teaching_or_research = 'T' OR teaching_or_research = 'R'),
 	research_interests varchar(50),
-	/*    CHECK ((faculty_or_freelancer = 'FA' AND yr_employed IS NOT NULL AND teaching_or_research = 'T' AND research_interests IS NULL) OR 
-	    	(faculty_or_freelancer = 'FA' AND year_employed IS NOT NULL AND teaching_or_research = 'R' AND research_interests IS NOT NULL) OR 
-	    	(faculty_or_freelancer = 'FR' AND year_employed IS NULL AND teaching_or_research IS NULL AND research_interests IS NULL)),*/
 	PRIMARY KEY(name, age)
 );
 
 CREATE TABLE Faculty (
     yr_employed int
         CONSTRAINT valid_yr_employed CHECK (yr_employed > 1900),
-    teaching_or_research varchar(1)
+    teaching_or_research varchar(1) NOT NULL
 ) INHERITS (Instructor);
 
 CREATE TABLE Research (
