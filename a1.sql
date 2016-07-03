@@ -170,12 +170,11 @@ CREATE TABLE Instructor (
 	    CHECK (faculty_or_freelancer = 'FA' OR faculty_or_freelancer = 'FR'),
 	teaching_or_research  varchar(1)
 		CHECK (teaching_or_research = 'T' OR teaching_or_research = 'R'),
-	research_interests varchar(50)
-	    CHECK ((faculty_or_freelancer = 'FA' AND yr_employed IS NOT NULL AND teaching_or_research = 'T' AND research_interests IS NULL) OR 
-	    	(faculty_or_freelancer = 'FA' AND yr_employed IS NOT NULL AND teaching_or_research = 'R' AND research_interests IS NOT NULL) OR 
-	    	(faculty_or_freelancer = 'FR' AND yr_employed IS NULL AND teaching_or_research IS NULL AND research_interests IS NULL)),
+	research_interests varchar(50),
 	yr_employed int
         CONSTRAINT valid_yr_employed CHECK (yr_employed > 1900),
+    teaching_or_research varchar(1),
+    research_interests varchar(50)
 	PRIMARY KEY(name, age)
 );
 
