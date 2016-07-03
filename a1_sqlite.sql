@@ -103,9 +103,9 @@ create table Company (
 );
 
 create table Job_skill (
-	company_name varchar(20), 
-	student_name varchar(20),
-	skill varchar(20) NOT NULL, 
+	company_name varchar(20),
+	title varchar(20),
+	skill varchar(20) NOT NULL,
 	level_of_expertise int CHECK(level_of_expertise BETWEEN 2 AND 5),
 	FOREIGN KEY(company_name) REFERENCES Job(company_name)
 	    ON DELETE CASCADE
