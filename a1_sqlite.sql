@@ -75,7 +75,7 @@ create table Student (
 	gender varchar(1)
 		CHECK (gender = 'F' OR gender = 'M'),
 	country_of_birth varchar(20) NOT NULL,
-	date_enrolled text NOT NULL,
+	date_enrolled text NOT NULL
 	/*CHECK (date_of_birth < date_enrolled)*/
 );
 
@@ -89,7 +89,7 @@ create table Job (
 	PRIMARY KEY (title, company_name),
 	FOREIGN KEY(student_name) REFERENCES Student(username)
 		ON DELETE CASCADE
-		ON UPDATE CASCADE,
+		ON UPDATE CASCADE
 	/*CHECK (start_date < end_date)*/
 );
 
@@ -127,15 +127,15 @@ create table Edition (
 		course_time='day' or course_time='evening'), 
 	number_of_students int CHECK (number_of_students >= 0),
 	FOREIGN KEY(course_code, dept_code) REFERENCES Courses(course_code, dept_code)
-	    ON UPDATE CASCADE,
+	    ON UPDATE CASCADE
 	/*CHECK (start_date < end_date)*/
 );
 
 create table Edition_to_Student (
 	edition_id int,
 	student_name varchar(20),
-	FOREIGN KEY(edition_id) REFERENCE Edition(edition_id),
-	FOREIGN KEY(student_name) REFERENCE Student (username),
+	FOREIGN KEY(edition_id) REFERENCES Edition(edition_id),
+	FOREIGN KEY(student_name) REFERENCES Student (username),
 	PRIMARY KEY(edition_id, student_name)
 );
 
@@ -144,14 +144,15 @@ create table Instructor (
 	age int CHECK (age > 0),
 	gender varchar(1) CHECK (gender = 'F' OR gender = 'M'),
 	areas_of_expertise varchar(30), 
+    yr_employed text NOT NULL,
 	faculty_or_freelancer varchar(2)
 	    CHECK (faculty_or_freelancer = 'FA' OR faculty_or_freelancer = 'FR'),
 	teaching_or_research varchar(1)
 		CHECK (teaching_or_research = 'T' OR teaching_or_research = 'R'),
 	research_interests varchar(50)
 	    CHECK ((faculty_or_freelancer = 'FA' AND yr_employed IS NOT NULL AND teaching_or_research = 'T' AND research_interests IS NULL) OR 
-	    	(faculty_or_freelancer = 'FA' AND year_employed IS NOT NULL AND teaching_or_research = 'R' AND research_interests IS NOT NULL) OR 
-	    	(faculty_or_freelancer = 'FR' AND year_employed IS NULL AND teaching_or_research IS NULL AND research_interests IS NULL)),
+	    	(faculty_or_freelancer = 'FA' AND yr_employed IS NOT NULL AND teaching_or_research = 'R' AND research_interests IS NOT NULL) OR 
+	    	(faculty_or_freelancer = 'FR' AND yr_employed IS NULL AND teaching_or_research IS NULL AND research_interests IS NULL)),
 	PRIMARY KEY(name, age)
 );
 
@@ -159,8 +160,8 @@ create table Edition_to_Instructor (
 	edition_id int, 
 	instructor_name varchar(20), 
 	age int,
-	FOREIGN KEY(edition_id) REFERENCE Edition(edition_id),
-	FOREIGN KEY(instructor_name, age) REFERENCE Instructor (name, age),
+	FOREIGN KEY(edition_id) REFERENCES Edition(edition_id),
+	FOREIGN KEY(instructor_name, age) REFERENCES Instructor (name, age),
 	PRIMARY KEY(edition_id, instructor_name, age)
 );
 
