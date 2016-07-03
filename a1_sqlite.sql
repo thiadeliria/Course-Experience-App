@@ -56,7 +56,7 @@ create table Topic (
 
 );
 
-CREATE TABLE Skill (
+create table Skill (
 	course_no int
 		CHECK (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
@@ -66,7 +66,7 @@ CREATE TABLE Skill (
 	PRIMARY KEY (course_no, dept_code, title)
 );
 
-CREATE TABLE Prerequisite (
+create table Prerequisite (
 	course_no int
 		CHECK (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
@@ -153,7 +153,7 @@ create table Edition (
 	/*CHECK (start_date < end_date)*/
 );
 
-CREATE TABLE Edition_to_Student (
+create table Edition_to_Student (
 	edition_id int,
 	student_name varchar(20),
 	FOREIGN KEY(edition_id) REFERENCE Edition(edition_id),
