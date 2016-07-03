@@ -133,8 +133,8 @@ CREATE TABLE Edition (
 CREATE TABLE Edition_to_Student (
 	edition_id int,
 	student_name varchar(20),
-	FOREIGN KEY(edition_id) REFERENCE Edition(edition_id),
-	FOREIGN KEY(student_name) REFERENCE Student (username),
+	FOREIGN KEY(edition_id) REFERENCES Edition(edition_id),
+	FOREIGN KEY(student_name) REFERENCES Student (username),
 	PRIMARY KEY(edition_id, student_name)
 );
 
@@ -170,8 +170,8 @@ CREATE TABLE Edition_to_Instructor (
 	edition_id int,
 	instructor_name varchar(20),
 	age int,
-	FOREIGN KEY(edition_id) REFERENCE Edition(edition_id),
-	FOREIGN KEY(instructor_name, age) REFERENCE Instructor (name, age),
+	FOREIGN KEY(edition_id) REFERENCES Edition(edition_id),
+	FOREIGN KEY(instructor_name, age) REFERENCES Instructor (name, age),
 	PRIMARY KEY(edition_id, instructor_name, age)
 );
 
