@@ -145,7 +145,6 @@ create table Instructor (
 	age int CHECK (age > 0),
 	gender varchar(1) CHECK (gender = 'F' OR gender = 'M'),
 	areas_of_expertise varchar(30), 
-    yr_employed text NOT NULL,
 	faculty_or_freelancer varchar(2)
 	    CHECK (faculty_or_freelancer = 'FA' OR faculty_or_freelancer = 'FR'),
 	teaching_or_research varchar(1)
@@ -154,6 +153,7 @@ create table Instructor (
 	    CHECK ((faculty_or_freelancer = 'FA' AND yr_employed IS NOT NULL AND teaching_or_research = 'T' AND research_interests IS NULL) OR 
 	    	(faculty_or_freelancer = 'FA' AND yr_employed IS NOT NULL AND teaching_or_research = 'R' AND research_interests IS NOT NULL) OR 
 	    	(faculty_or_freelancer = 'FR' AND yr_employed IS NULL AND teaching_or_research IS NULL AND research_interests IS NULL)),
+    yr_employed text NOT NULL,
 	PRIMARY KEY(name, age)
 );
 
