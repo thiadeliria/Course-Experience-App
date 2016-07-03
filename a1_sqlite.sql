@@ -20,14 +20,14 @@ drop table if exists Interest_in_course;
 create table Course (
 	course_no int CHECK(course_code BETWEEN 100 AND 9999), 
 	dept_name varchar(40) NOT NULL, 
-	dept_code varchar(3) CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
+	dept_code varchar(3) CONSTRAINT alphabet_only CHECK (dept_code LIKE '[[:alpha:]]'),
 	general_area varchar(30) NOT NULL,
 	PRIMARY KEY (course_no, dept_code)
 );
 
 create table Topic (
 	course_no int CHECK (course_no BETWEEN 100 AND 9999), 
-	dept_code varchar(3) CHECK (dept_code ~ '[[:alpha:]]'), 
+	dept_code varchar(3) CHECK (dept_code LIKE '[[:alpha:]]'), 
 	title varchar(30) NOT NULL,
 	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code),
 	PRIMARY KEY (course_no, dept_code, title)
@@ -38,7 +38,7 @@ create table Skill (
 	course_no int
 		CHECK (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
-	    CHECK (dept_code ~ '[[:alpha:]]'),
+	    CHECK (dept_code LIKE '[[:alpha:]]'),
 	title varchar(30) NOT NULL,
 	FOREIGN KEY (course_no, dept_code) REFERENCES Courses(course_no, dept_code),
 	PRIMARY KEY (course_no, dept_code, title)
@@ -48,7 +48,7 @@ create table Prerequisite (
 	course_no int
 		CHECK (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
-	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
+	    CONSTRAINT alphabet_only CHECK (dept_code LIKE '[[:alpha:]]'),
 	course_id varchar(7),
 	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code)
 		ON DELETE CASCADE
@@ -60,7 +60,7 @@ create table Exclusion (
 	course_no int
 		CHECK (course_no BETWEEN 100 AND 9999),
 	dept_code varchar(3)
-	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
+	    CONSTRAINT alphabet_only CHECK (dept_code LIKE '[[:alpha:]]'),
 	course_id varchar(7)
 	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code)
 		ON DELETE CASCADE
