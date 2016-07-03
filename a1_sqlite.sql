@@ -20,7 +20,7 @@ drop table if exists Interest_in_course;
 create table Course (
 	course_no int CHECK(course_code BETWEEN 100 AND 9999), 
 	dept_name varchar(40) NOT NULL, 
-	dept_code varchar(3) alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
+	dept_code varchar(3) CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
 	general_area varchar(30) NOT NULL,
 	PRIMARY KEY (course_no, dept_code)
 );
@@ -169,8 +169,8 @@ create table Experience (
 	student_name varchar(20), 
 	edition_id int, 
 	grade int NOT NULL, 
-	satisfaction int CHECK(satisfaction BETWEEN 1 AND 5), , 
-	instructor_ranking int CHECK(instructor_ranking BETWEEN 1 AND 5), , 
+	satisfaction int CHECK(satisfaction BETWEEN 1 AND 5),
+	instructor_ranking int CHECK(instructor_ranking BETWEEN 1 AND 5),
 	skills varchar(20),
 	FOREIGN KEY(student_name) REFERENCES Student(username)
 	    ON UPDATE CASCADE,
