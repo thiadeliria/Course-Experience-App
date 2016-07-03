@@ -2,7 +2,8 @@ DROP SCHEMA IF EXISTS cea CASCADE;
 CREATE SCHEMA cea;
 SET SEARCH_PATH TO cea;
 
-/* Delete the tables if they already exist */
+
+/* ---------Delete the tables if they already exist-------- */
 drop table if exists Course;
 drop table if exists Topic;
 drop table if exists Skill;
@@ -22,47 +23,50 @@ drop table if exists Experience;
 drop table if exists Course_skill;
 drop table if exists Interest_in_course;
 
-CREATE TYPE time_of_day AS ENUM ('morning', 'day', 'evening');
 
-CREATE DOMAIN ranking AS int
-    CONSTRAINT valid_ranking CHECK(
-        VALUE BETWEEN 1 AND 5);
+/* --------------------ENUM and DOMAIN--------------------- */
+CREATE TYPE enum_time_of_day AS ENUM ('morning', 'day', 'evening');
 
+CREATE TYPE enum_gender AS ENUM ('M', 'F', 'O');
+
+CREATE DOMAIN dom_ranking AS int
+    CONSTRAINT valid_ranking CHECK(VALUE BETWEEN 1 AND 5);
+
+CREATE DOMAIN dom_course_no AS int
+    CONSTRAINT valid_course_no CHECK(VALUE BETWEEN 100 and 9999);
+
+CREATE DOMAIN dom_dept_code AS varchar
+    CONSTRAINT valid_dept_code CHECK (VALUE LIKE '[[:alpha:]]' AND VALUE = UPPER(dept_code));
+
+
+/* ----------------------CREATE TABLE----------------------- */
 CREATE TABLE Course (
-	course_no int
-		CHECK valid_course_no (course_no BETWEEN 100 AND 9999),
+	course_no dom_course_no,
 	dept_name varchar(40) NOT NULL,
-	dept_code varchar(3)
-	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
+	dept_code dom_dept_code,
 	general_area varchar(30) NOT NULL,
 	PRIMARY KEY (course_no, dept_code)
 );
 
 CREATE TABLE Topic (
-	course_no int
-		CHECK valid_course_no (course_no BETWEEN 100 AND 9999),
-	dept_code varchar(3)
-	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
+	course_no dom_course_no,
+	dept_code dom_dept_code,
 	title varchar(30) NOT NULL,
 	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code),
 	PRIMARY KEY (course_no, dept_code, title)
 );
 
 CREATE TABLE Skill (
-	course_no int
-		CHECK valid_course_no (course_no BETWEEN 100 AND 9999),
-	dept_code varchar(3)
-	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
+	course_no dom_course_no,
+	dept_code dom_dept_code,
 	title varchar(30) NOT NULL,
 	FOREIGN KEY (course_no, dept_code) REFERENCES Courses(course_no, dept_code),
 	PRIMARY KEY (course_no, dept_code, title)
 );
 
 CREATE TABLE Prerequisite (
-	course_no int
-		CHECK valid_course_no (course_no BETWEEN 100 AND 9999),
-	dept_code varchar(3)
-	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
+	course_no dom_course_no,
+	dept_code dom_dept_code,
 	course_id varchar(7),
 	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code)
 		ON DELETE CASCADE
@@ -71,10 +75,8 @@ CREATE TABLE Prerequisite (
 );
 
 CREATE TABLE Exclusion (
-	course_no int
-		CHECK valid_course_no (course_no BETWEEN 100 AND 9999),
-	dept_code varchar(3)
-	    CONSTRAINT alphabet_only CHECK (dept_code ~ '[[:alpha:]]'),
+	course_no dom_course_no,
+	dept_code dom_dept_code,
 	course_id varchar(7)
 	FOREIGN KEY(course_no, dept_code) REFERENCES Courses(course_no, dept_code)
 		ON DELETE CASCADE
@@ -87,8 +89,7 @@ CREATE TABLE Student (
 	username  varchar(20) PRIMARY KEY,
 	date_of_birth date
 		CHECK (date_of_birth > 19000101 AND date_of_birth < 20160623),
-	gender varchar(1)
-		CHECK (gender = 'F' OR gender = 'M'),
+	gender enum_gender,
 	country_of_birth varchar(20) NOT NULL,
 	date_enrolled date
 		CHECK (date_enrolled > 19000101 AND date_enrolled < 20160623),
@@ -138,13 +139,12 @@ CREATE TABLE Edition (
 	edition_id int PRIMARY KEY,
 	course_code int
 	    CONSTRAINT 3_or_4_digit_course CHECK (course_code BETWEEN 100 AND 9999),
-	dept_code varchar(3)
-	    CONSTRAINT check_uppercase CHECK(dept_code = UPPER(dept_code)),
+	dept_code dom_dept_code,
 	start_date date
 		CHECK (start_date > 19000101 AND start_date < 20160623),
 	end_date date
 		CHECK (end_date > 19000101 AND end_date < 20170701),
-	course_time time_of_day NOT NULL,
+	course_time enum_time_of_day NOT NULL,
 	number_of_students int
 	    CONSTRAINT positive_enrollment CHECK (number_of_students >= 0),
 	FOREIGN KEY(course_code, dept_code) REFERENCES Courses(course_code, dept_code)
@@ -164,17 +164,22 @@ CREATE TABLE Instructor (
 	name varchar(30),
 	age int
 	    CONSTRAINT positive_age CHECK (age > 0),
-	gender varchar(1)
-	    CONSTRAINT valid_gender CHECK (gender = 'F' OR gender = 'M'),
+	gender enum_gender,
 	areas_of_expertise varchar(30),
 	faculty_or_freelancer varchar(2)
 	    CHECK (faculty_or_freelancer = 'FA' OR faculty_or_freelancer = 'FR'),
 	teaching_or_research  varchar(1)
 		CHECK (teaching_or_research = 'T' OR teaching_or_research = 'R'),
 	research_interests varchar(50),
+	yr_employed int
+        CONSTRAINT valid_yr_employed CHECK (yr_employed > 1900),
+    teaching_or_research varchar(1),
+    research_interests varchar(50)
 	PRIMARY KEY(name, age)
 );
 
+/*INHERITS generates error.*/
+/*
 CREATE TABLE Faculty (
     yr_employed int
         CONSTRAINT valid_yr_employed CHECK (yr_employed > 1900),
@@ -184,6 +189,7 @@ CREATE TABLE Faculty (
 CREATE TABLE Research (
     research_interests varchar(50)
 ) INHERITS (Faculty);
+*/
 
 CREATE TABLE Edition_to_Instructor (
 	edition_id int,
