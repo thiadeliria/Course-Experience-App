@@ -1,0 +1,48 @@
+Course number (with department code)
+select (dept_code + course_code)
+from student, edition, experience
+where username=student_name and edition.edition_id=experience.edition_id;
+-Course start date
+select start_date from edition;
+-Course end date
+select end_date from edition;
+-Time of day
+select time_of_day from edition;
+-Total number of students
+select number_of_students from edition;
+-Name of the course instructor(s): one or many delimited by |
+select (instructor_name+'|') from edition_to_instructor;
+-Student user name
+select student_name from experience;
+-Course grade
+select grade from experience;
+-Student age
+select case when date_of_birth[0:5]<201607 then (2016-date_of_birth[0:3]) else (2017-date_of_birth[0:3]) end
+from student;
+-Student year and month of birth, space delimited
+select (date_of_birth[0:3]+' '+date_of_birth[4:5])
+from student;
+-Student gender
+select gender
+from student, experience
+where username=student_name;
+-Student country of birth
+select country_of_birth from student;
+-List of skills acquired outside academia in form of skill-rank pair, delimited by |
+select (skill+'|'level_of_expertise)
+from job_skill;
+-Student start date at the University
+select date_enrolled from student;
+-Course satisfaction
+select satisfaction from experience;
+-Instructor ranking
+select instructor_ranking from experience;
+-List of skills learned in the course: in form of skill - rank before- rank after, delimited by |
+select (skill+'|'level_before+'|'+level_after)
+from course_skill;
+-List of topics learned in the course: in form of topic-interest before-interest after,
+delimited by |
+select (title+'|'+interest_before+'|'+interest_after)
+from topic;
+
+
