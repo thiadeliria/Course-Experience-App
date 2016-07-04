@@ -9,7 +9,7 @@ select time_of_day from edition;
 -Total number of students
 select number_of_students from edition;
 -Name of the course instructor(s): one or many delimited by |
-select (instructor_name || '|') from edition_to_instructor;
+select instructor_name from edition_to_instructor;
 -Student user name
 select student_name from experience;
 -Course grade
