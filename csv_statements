@@ -1,5 +1,5 @@
 Course number (with department code)
-select (dept_code || course_no) from edition;
+select (dept_code || course_no) from course;
 -Course start date
 select start_date from edition;
 -Course end date
